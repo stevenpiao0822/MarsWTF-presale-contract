@@ -35,4 +35,31 @@ contract Marketplace {
         marketFee = _marketFee;
         listFee = _listFee;
     }
+
+    function openEnglishAuction(
+        address _nftContract,
+        uint256 _tokenId,
+        uint256 _initPrice,
+        uint256 _period
+    ) external {
+        if (listFee > 0) {
+            SafeERC20.safeTransferFrom(
+                IERC20(feeToken),
+                msg.sender,
+                address(this),
+                listFee
+            );
+        }
+        EnglishAuction englishAuction = new EnglishAuction(
+            msg.sender,
+            _nftContract,
+            _tokenId,
+            _initPrice,
+            _period,
+            feeToken,
+            marketFee
+        );
+        englishAuctions.push(address(englishAuction));
+    }
+
 }
