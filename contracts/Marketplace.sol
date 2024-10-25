@@ -114,4 +114,18 @@ contract Marketplace {
         );
         fixSales.push(address(fixSale));
     }
+        function englishAuctionLength() external view returns(uint256){
+        return englishAuctions.length;
+    }
+    function dutchAuctionLength() external view returns(uint256){
+        return dutchAuctions.length;
+    }
+    function fixSaleLength() external view returns(uint256){
+        return fixSales.length;
+    }
+    function withdraw() external{
+        require(msg.sender == devTeam, "Only dev team can withdraw");
+        uint256 amount = IERC20(feeToken).balanceOf(address(this));
+        SafeERC20.safeTransfer(IERC20(feeToken), msg.sender, amount);
+    }
 }
