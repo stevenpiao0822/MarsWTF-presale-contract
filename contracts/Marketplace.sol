@@ -61,5 +61,4 @@ contract Marketplace {
         );
         englishAuctions.push(address(englishAuction));
     }
-
 }
