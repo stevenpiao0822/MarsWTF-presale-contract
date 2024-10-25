@@ -61,4 +61,32 @@ contract Marketplace {
         );
         englishAuctions.push(address(englishAuction));
     }
+    
+    function openDutchAuction(
+        address _nftContract,
+        uint256 _tokenId,
+        uint256 _initPrice,
+        uint256 _period,
+        uint256 _reducingRate
+    ) external {
+        if (listFee > 0) {
+            SafeERC20.safeTransferFrom(
+                IERC20(feeToken),
+                msg.sender,
+                address(this),
+                listFee
+            );
+        }
+        DutchAuction dutchAuction = new DutchAuction(
+            msg.sender,
+            _nftContract,
+            _tokenId,
+            _initPrice,
+            _period,
+            _reducingRate,
+            feeToken,
+            marketFee
+        );
+        dutchAuctions.push(address(dutchAuction));
+    }
 }
