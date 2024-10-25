@@ -2,6 +2,19 @@
   "name": "hardhat-project",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "hardhat": "^2.22.15"
+    "@openzeppelin/contracts": "^5.1.0",
+    "@types/chai": "^4.3.16",
+    "@types/jest": "^29.5.12",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.14.2",
+    "chai": "^4.4.1",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.15",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.10",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0"
   }
 }
