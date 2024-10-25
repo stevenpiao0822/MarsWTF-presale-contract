@@ -89,4 +89,29 @@ contract Marketplace {
         );
         dutchAuctions.push(address(dutchAuction));
     }
+
+    
+    function openFixSale(
+        address _nftContract,
+        uint256 _tokenId,
+        uint256 _initPrice
+    ) external {
+        if (listFee > 0) {
+            SafeERC20.safeTransferFrom(
+                IERC20(feeToken),
+                msg.sender,
+                address(this),
+                listFee
+            );
+        }
+        FixSale fixSale = new FixSale(
+            msg.sender,
+            _nftContract,
+            _tokenId,
+            _initPrice,
+            feeToken,
+            marketFee
+        );
+        fixSales.push(address(fixSale));
+    }
 }
