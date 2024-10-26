@@ -221,3 +221,39 @@ interface IUniswapFactory {
         address tokenB
     ) external returns (address pair);
 }
+
+contract MarsWTF is IERC20, Ownable {
+    using SafeMath for uint256;
+
+    mapping(address => uint256) private _balances;
+    mapping(address => mapping(address => uint256)) private _allowances;
+
+    string private _name;
+    string private _symbol;
+    uint8 private _decimals;
+    uint256 private _totalSupply;
+    address public _uniswapPair;
+    uint256 public _walletMAX;
+
+    function setWalletMax(uint8 percentage) public onlyOwner {
+        _walletMAX = (totalSupply() * percentage) / 100;
+    }
+
+    function SetUniswapV3PairAddress(address uniswappairv3) public onlyOwner {
+        _uniswapPair = uniswappairv3;
+    }
+
+    constructor() {
+        _name = unicode"MarsWTF";
+        _symbol = unicode"MarsWTF";
+        _decimals = 18;
+
+        _totalSupply = 10000000000 * 10 ** _decimals;
+
+        _walletMAX = (_totalSupply * 2) / 100; //set walletMax as 2% of totalSupply
+
+        address receiver = msg.sender;
+        _balances[receiver] = _totalSupply;
+        emit Transfer(address(0), receiver, _totalSupply);
+    }
+}
