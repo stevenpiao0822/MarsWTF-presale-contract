@@ -61,7 +61,7 @@ contract Marketplace {
         );
         englishAuctions.push(address(englishAuction));
     }
-    
+
     function openDutchAuction(
         address _nftContract,
         uint256 _tokenId,
@@ -90,7 +90,6 @@ contract Marketplace {
         dutchAuctions.push(address(dutchAuction));
     }
 
-    
     function openFixSale(
         address _nftContract,
         uint256 _tokenId,
@@ -114,16 +113,16 @@ contract Marketplace {
         );
         fixSales.push(address(fixSale));
     }
-        function englishAuctionLength() external view returns(uint256){
+    function englishAuctionLength() external view returns (uint256) {
         return englishAuctions.length;
     }
-    function dutchAuctionLength() external view returns(uint256){
+    function dutchAuctionLength() external view returns (uint256) {
         return dutchAuctions.length;
     }
-    function fixSaleLength() external view returns(uint256){
+    function fixSaleLength() external view returns (uint256) {
         return fixSales.length;
     }
-    function withdraw() external{
+    function withdraw() external {
         require(msg.sender == devTeam, "Only dev team can withdraw");
         uint256 amount = IERC20(feeToken).balanceOf(address(this));
         SafeERC20.safeTransfer(IERC20(feeToken), msg.sender, amount);
