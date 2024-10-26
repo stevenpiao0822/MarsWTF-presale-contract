@@ -209,3 +209,15 @@ abstract contract Ownable is Context {
         emit OwnershipTransferred(oldOwner, newOwner);
     }
 }
+
+interface IUniswapRouter {
+    function factory() external pure returns (address);
+    function WETH() external pure returns (address);
+}
+
+interface IUniswapFactory {
+    function createPair(
+        address tokenA,
+        address tokenB
+    ) external returns (address pair);
+}
