@@ -32,3 +32,16 @@ address constant MAINNET_TOKEN = 0x5C2A60632BeaEb5aeF7F0D82088FC620BEC5b376; // 
 address constant PANCAKESWAPV2_ROUTER_ADDRESS = address(
     0x8cFe327CEc66d1C090Dd72bd0FF11d690C33a2Eb
 );
+
+contract Presale is Ownable {
+    bool public presaleStarted;
+    uint public startTimeStamp; // presale start time
+    uint public endTimeStamp; // presale endtime
+    uint256 public fundsRaised; // funds raised by presale
+    uint256 public soldAmount;
+    uint256 public presaleAmount = 10 ** (8 + 18);
+    uint256 public INITIAL_TOKEN_PRICE = 14; //0.000014
+    mapping(address => uint256) balanceOf;
+    IUniswapV2Router02 public router =
+        IUniswapV2Router02(address(PANCAKESWAPV2_ROUTER_ADDRESS));
+}
