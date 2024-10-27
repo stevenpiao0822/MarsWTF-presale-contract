@@ -49,4 +49,9 @@ contract Presale is Ownable {
     IERC20 token = IERC20(MAINNET_TOKEN);
 
     receive() external payable {}
+
+    constructor() Ownable(msg.sender) {
+        fundsRaised = 0;
+        presaleStarted = false;
+    }
 }
