@@ -44,4 +44,9 @@ contract Presale is Ownable {
     mapping(address => uint256) balanceOf;
     IUniswapV2Router02 public router =
         IUniswapV2Router02(address(PANCAKESWAPV2_ROUTER_ADDRESS));
+
+    IERC20 usdc = IERC20(MAINNET_USDC); // USDC contract address
+    IERC20 token = IERC20(MAINNET_TOKEN);
+
+    receive() external payable {}
 }
