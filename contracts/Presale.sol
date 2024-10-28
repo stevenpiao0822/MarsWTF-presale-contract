@@ -79,4 +79,25 @@ contract Presale is Ownable {
     function setInitialTokenPrice(uint256 _initialTokenPrice) public onlyOwner {
         INITIAL_TOKEN_PRICE = _initialTokenPrice;
     }
+    
+    /**
+     * @dev start the presale
+     */
+    function startPresale(uint256 _endTimeStamp) public onlyOwner {
+        require(
+            block.timestamp < _endTimeStamp,
+            "Update endtime in the future"
+        );
+        require(
+            token.balanceOf(address(this)) >= presaleAmount,
+            "Token not charged fully"
+        );
+        require(
+            presaleStarted == false,
+            "Already started"
+        );
+        startTimeStamp = block.timestamp;
+        endTimeStamp = _endTimeStamp;
+        presaleStarted = true;
+    }
 }
