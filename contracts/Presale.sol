@@ -75,4 +75,8 @@ contract Presale is Ownable {
         uint256 tokenPrice = INITIAL_TOKEN_PRICE + currentStep * 20;
         return tokenPrice;
     }
+    
+    function setInitialTokenPrice(uint256 _initialTokenPrice) public onlyOwner {
+        INITIAL_TOKEN_PRICE = _initialTokenPrice;
+    }
 }
