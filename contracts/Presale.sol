@@ -65,7 +65,7 @@ contract Presale is Ownable {
         );
         endTimeStamp = _endTimeStamp;
     }
-    
+
     /**
      * @dev get current token price for presale
      * @return uint256
@@ -75,11 +75,11 @@ contract Presale is Ownable {
         uint256 tokenPrice = INITIAL_TOKEN_PRICE + currentStep * 20;
         return tokenPrice;
     }
-    
+
     function setInitialTokenPrice(uint256 _initialTokenPrice) public onlyOwner {
         INITIAL_TOKEN_PRICE = _initialTokenPrice;
     }
-    
+
     /**
      * @dev start the presale
      */
@@ -92,12 +92,17 @@ contract Presale is Ownable {
             token.balanceOf(address(this)) >= presaleAmount,
             "Token not charged fully"
         );
-        require(
-            presaleStarted == false,
-            "Already started"
-        );
+        require(presaleStarted == false, "Already started");
         startTimeStamp = block.timestamp;
         endTimeStamp = _endTimeStamp;
         presaleStarted = true;
+    }
+    /**
+     * @dev calculate remaining time for presale
+     * @return uint256
+     */
+    function calculateRemainingTime() public view returns (uint256) {
+        require(block.timestamp < endTimeStamp, "Presale is ended");
+        return (endTimeStamp - block.timestamp);
     }
 }
