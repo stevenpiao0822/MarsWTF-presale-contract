@@ -65,4 +65,14 @@ contract Presale is Ownable {
         );
         endTimeStamp = _endTimeStamp;
     }
+    
+    /**
+     * @dev get current token price for presale
+     * @return uint256
+     */
+    function getCurrentTokenPrice() public view returns (uint256) {
+        uint256 currentStep = soldAmount / (5 * 10 ** (6 + 18));
+        uint256 tokenPrice = INITIAL_TOKEN_PRICE + currentStep * 20;
+        return tokenPrice;
+    }
 }
