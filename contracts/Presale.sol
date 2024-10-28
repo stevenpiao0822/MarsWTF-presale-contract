@@ -55,5 +55,14 @@ contract Presale is Ownable {
         presaleStarted = false;
     }
 
-    
+    /**
+     * @dev extend presale period
+     */
+    function updateEndTimeStamp(uint256 _endTimeStamp) public onlyOwner {
+        require(
+            block.timestamp < _endTimeStamp,
+            "Update endtime in the future"
+        );
+        endTimeStamp = _endTimeStamp;
+    }
 }
