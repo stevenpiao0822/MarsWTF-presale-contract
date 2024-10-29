@@ -148,4 +148,18 @@ contract Presale is Ownable {
         balanceOf[msg.sender] += tokenAmount;
         soldAmount += tokenAmount;
     }
+
+    /**
+     * @dev get hardcap for presale
+     * @return hardcap  
+     */
+    function getHardcap() public view returns (uint256) {
+        uint256 _hardcap = 0;
+        for (uint256 i = 0; i < 20; i++) {
+            _hardcap +=
+                ((INITIAL_TOKEN_PRICE + i * 20) * (5 * 10 ** 6)) /
+                (10 ** 6);
+        }
+        return _hardcap;
+    }
 }
