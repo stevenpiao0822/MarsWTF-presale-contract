@@ -170,4 +170,12 @@ contract Presale is Ownable {
     function sale() public view returns (uint256) {
         return token.balanceOf(address(this));
     }
+
+    /**
+     * @dev get mars balance for address
+     * @return
+     */
+    function marsBalance(address _account) external view returns (uint256) {
+        return token.balanceOf(_account);
+    }
 }
