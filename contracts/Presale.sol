@@ -195,7 +195,7 @@ contract Presale is Ownable {
         return soldAmount / (5 * 10 ** (6 + 18));
     }
 
-        /**
+    /**
      * @dev get purchase available mars token amount by ETH
      * @param _amount Eth amount
      * @return
