@@ -105,4 +105,22 @@ contract Presale is Ownable {
         require(block.timestamp < endTimeStamp, "Presale is ended");
         return (endTimeStamp - block.timestamp);
     }
+
+        /**
+     * @dev purchase mars token using USDC
+     */
+    function buyTokenWithUSDC(uint256 _usdcAmount) external {
+        if (block.timestamp >= endTimeStamp) presaleStarted = false;
+        require(block.timestamp > startTimeStamp, "Presale is not started");
+        require(presaleStarted == true, "Presale is ended");
+        require(0 < _usdcAmount, "Unavailable amount of token to buy");
+
+        uint256 currentTokenPrice = getCurrentTokenPrice();
+        uint256 _tokenAmount = (_usdcAmount * 10 ** 6) / currentTokenPrice;
+
+        fundsRaised = fundsRaised + _usdcAmount;
+        usdc.transferFrom(msg.sender, address(this), _usdcAmount);
+        balanceOf[msg.sender] += _tokenAmount;
+        soldAmount += _tokenAmount;
+    }
 }
