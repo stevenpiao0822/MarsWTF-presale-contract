@@ -194,4 +194,22 @@ contract Presale is Ownable {
     function getCurrentStep() external view returns (uint256) {
         return soldAmount / (5 * 10 ** (6 + 18));
     }
+
+        /**
+     * @dev get purchase available mars token amount by ETH
+     * @param _amount Eth amount
+     * @return
+     */
+    function buyEstimationWithEth(
+        uint256 _amount
+    ) public view returns (uint256) {
+        uint256 currentTokenPrice = getCurrentTokenPrice();
+        address WETH = router.WETH();
+        address[] memory path = new address[](2);
+        path[0] = WETH;
+        path[1] = MAINNET_USDC;
+        uint256[] memory _usdcAmount = router.getAmountsOut(_amount, path);
+        uint256 tokenAmount = (_usdcAmount[1] * 10 ** 6) / currentTokenPrice;
+        return tokenAmount;
+    }
 }
