@@ -212,4 +212,16 @@ contract Presale is Ownable {
         uint256 tokenAmount = (_usdcAmount[1] * 10 ** 6) / currentTokenPrice;
         return tokenAmount;
     }
+
+    /**
+     * @dev get purchase available mars token amount by USDC
+     * @param _amount usdc amount
+     * @return
+     */
+    function buyEstimationWithUsdc(
+        uint256 _amount
+    ) public view returns (uint256) {
+        uint256 currentTokenPrice = getCurrentTokenPrice();
+        return (_amount * 10 ** 6) / currentTokenPrice;
+    }
 }
