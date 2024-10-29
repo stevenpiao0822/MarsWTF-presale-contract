@@ -151,7 +151,7 @@ contract Presale is Ownable {
 
     /**
      * @dev get hardcap for presale
-     * @return hardcap  
+     * @return hardcap
      */
     function getHardcap() public view returns (uint256) {
         uint256 _hardcap = 0;
@@ -161,5 +161,13 @@ contract Presale is Ownable {
                 (10 ** 6);
         }
         return _hardcap;
+    }
+
+    /**
+     * @dev get total token amount for presale
+     * @return
+     */
+    function sale() public view returns (uint256) {
+        return token.balanceOf(address(this));
     }
 }
