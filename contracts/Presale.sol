@@ -178,4 +178,12 @@ contract Presale is Ownable {
     function marsBalance(address _account) external view returns (uint256) {
         return token.balanceOf(_account);
     }
+    
+    /**
+     * @dev get usdc balance for address
+     * @return
+     */
+    function usdcBalance(address _account) external view returns (uint256) {
+        return usdc.balanceOf(_account);
+    }
 }
