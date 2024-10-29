@@ -123,4 +123,29 @@ contract Presale is Ownable {
         balanceOf[msg.sender] += _tokenAmount;
         soldAmount += _tokenAmount;
     }
+
+    /**
+     * @dev purchase mars token using ETH
+     */
+    function buyTokenWithETH() external payable {
+        if (block.timestamp >= endTimeStamp) presaleStarted = false;
+        require(block.timestamp > startTimeStamp, "Presale is not started");
+        require(presaleStarted == true, "Presale is ended");
+        require(msg.value > 0, "Unavailable amount of token to buy");
+
+        address WETH = router.WETH();
+        address[] memory path = new address[](2);
+        path[0] = WETH;
+        path[1] = MAINNET_USDC;
+        uint256[] memory amounts = router.swapExactETHForTokens{
+            value: msg.value
+        }(0, path, address(this), block.timestamp + 15 minutes);
+        uint256 usdAmount = amounts[1];
+
+        uint256 currentTokenPrice = getCurrentTokenPrice();
+        uint256 tokenAmount = (usdAmount * 10 ** 6) / currentTokenPrice;
+        fundsRaised += usdAmount;
+        balanceOf[msg.sender] += tokenAmount;
+        soldAmount += tokenAmount;
+    }
 }
