@@ -106,7 +106,7 @@ contract Presale is Ownable {
         return (endTimeStamp - block.timestamp);
     }
 
-        /**
+    /**
      * @dev purchase mars token using USDC
      */
     function buyTokenWithUSDC(uint256 _usdcAmount) external {
