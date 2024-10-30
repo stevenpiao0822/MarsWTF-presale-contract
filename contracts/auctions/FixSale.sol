@@ -35,4 +35,26 @@ contract FixSale {
         marketFee = _marketFee;
         require(IERC721(nftContract).ownerOf(tokenId) == seller, "Not owner");
     }
+
+    function buyFixedSale() external {
+        require(!finishedState, "ALready sold out");
+        uint256 marketFeeAmount = (currentPrice * marketFee) / 100;
+        uint256 sellerAmount = currentPrice - marketFeeAmount;
+        SafeERC20.safeTransferFrom(
+            IERC20(feeToken),
+            msg.sender,
+            marketplace,
+            marketFeeAmount
+        );
+        SafeERC20.safeTransferFrom(
+            IERC20(feeToken),
+            msg.sender,
+            seller,
+            sellerAmount
+        );
+        IERC721(nftContract).transferFrom(seller, msg.sender, tokenId);
+        buyer = msg.sender;
+        endTime = block.timestamp;
+        finishedState = true;
+    }
 }
