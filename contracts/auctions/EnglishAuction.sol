@@ -4,4 +4,19 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-contract EnglishAuction {}
+contract EnglishAuction {
+    address public seller;
+    address public nftContract;
+    uint256 public tokenId;
+    uint256 public initPrice;
+    uint256 public currentPrice;
+    bool public finishedState;
+    uint256 public startTime;
+    uint256 public period;
+    uint256 public endTime;
+    address public feeToken;
+    mapping(address => uint256) public balance;
+    address public marketplace;
+    address public winner;
+    uint256 public marketFee;
+}
