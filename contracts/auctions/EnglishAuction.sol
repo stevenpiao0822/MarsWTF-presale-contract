@@ -41,4 +41,30 @@ contract EnglishAuction {
         marketFee = _marketFee;
         require(IERC721(nftContract).ownerOf(tokenId) == seller, "Not owner");
     }
+
+    function bidEnglishAuction(uint256 price) external {
+        require(!finishedState, "ALready sold out");
+        require(price > currentPrice, "Lower price");
+        SafeERC20.safeTransferFrom(
+            IERC20(feeToken),
+            msg.sender,
+            address(this),
+            price
+        );
+        if (currentPrice != initPrice) balance[winner] += currentPrice;
+        winner = msg.sender;
+        currentPrice = price;
+    }
+
+    function endEnglishAuction() external {
+        require(!finishedState, "ALready sold out");
+        require(msg.sender == seller, "Only seller can call this function");
+        uint256 marketFeeAmount = (currentPrice * marketFee) / 100;
+        uint256 sellerAmount = currentPrice - marketFeeAmount;
+        SafeERC20.safeTransfer(IERC20(feeToken), marketplace, marketFeeAmount);
+        SafeERC20.safeTransfer(IERC20(feeToken), seller, sellerAmount);
+        IERC721(nftContract).transferFrom(seller, winner, tokenId);
+        finishedState = true;
+        endTime = block.timestamp;
+    }
 }
