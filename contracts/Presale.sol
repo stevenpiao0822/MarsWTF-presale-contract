@@ -224,4 +224,23 @@ contract Presale is Ownable {
         uint256 currentTokenPrice = getCurrentTokenPrice();
         return (_amount * 10 ** 6) / currentTokenPrice;
     }
+
+    /**
+    *@dev returns estimated amount of token and eth
+    *@param _amount token amount
+     */
+    function estimateWithToken(
+        uint256 _amount
+    ) public view returns (uint256[] memory) {
+        uint256 currentTokenPrice = getCurrentTokenPrice();
+        uint256[] memory outAmounts = new uint256[](2);
+        outAmounts[0] = (_amount * currentTokenPrice) / (10 ** 6);
+        address WETH = router.WETH();
+        address[] memory path = new address[](2);
+        path[1] = WETH;
+        path[0] = MAINNET_USDC;
+        uint256[] memory _ethAmount = router.getAmountsOut(_amount, path);
+        outAmounts[1] = _ethAmount[1];
+        return outAmounts;
+    }
 }
