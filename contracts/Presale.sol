@@ -226,8 +226,8 @@ contract Presale is Ownable {
     }
 
     /**
-    *@dev returns estimated amount of token and eth
-    *@param _amount token amount
+     *@dev returns estimated amount of token and eth
+     *@param _amount token amount
      */
     function estimateWithToken(
         uint256 _amount
@@ -244,7 +244,7 @@ contract Presale is Ownable {
         return outAmounts;
     }
 
-        /**
+    /**
      * @dev withdraw fundsRaised to dev wallet
      */
     function withdraw(address _to) public payable onlyOwner {
@@ -261,7 +261,9 @@ contract Presale is Ownable {
         balanceOf[msg.sender] = 0;
         token.transfer(msg.sender, amount);
     }
-    function transferOwnership(address newOwner) public virtual override onlyOwner {
+    function transferOwnership(
+        address newOwner
+    ) public virtual override onlyOwner {
         super.transferOwnership(newOwner);
     }
 }
