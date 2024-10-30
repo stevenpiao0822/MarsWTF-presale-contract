@@ -16,4 +16,23 @@ contract FixSale {
     address public marketplace;
     address public buyer;
     uint256 public marketFee;
+
+    constructor(
+        address _seller,
+        address _nftContract,
+        uint256 _tokenId,
+        uint256 _initPrice,
+        address _feeToken,
+        uint256 _marketFee
+    ) {
+        seller = _seller;
+        nftContract = _nftContract;
+        tokenId = _tokenId;
+        currentPrice = _initPrice;
+        startTime = block.timestamp;
+        feeToken = _feeToken;
+        marketplace = msg.sender;
+        marketFee = _marketFee;
+        require(IERC721(nftContract).ownerOf(tokenId) == seller, "Not owner");
+    }
 }
