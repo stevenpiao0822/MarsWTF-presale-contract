@@ -67,4 +67,11 @@ contract EnglishAuction {
         finishedState = true;
         endTime = block.timestamp;
     }
+
+    function withdraw() external {
+        uint256 amount = balance[msg.sender];
+        require(amount > 0, "No amount to withdraw");
+        balance[msg.sender] = 0;
+        SafeERC20.safeTransfer(IERC20(feeToken), msg.sender, amount);
+    }
 }
