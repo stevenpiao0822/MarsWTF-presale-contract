@@ -243,4 +243,25 @@ contract Presale is Ownable {
         outAmounts[1] = _ethAmount[1];
         return outAmounts;
     }
+
+        /**
+     * @dev withdraw fundsRaised to dev wallet
+     */
+    function withdraw(address _to) public payable onlyOwner {
+        usdc.transfer(_to, usdc.balanceOf(address(this)));
+    }
+
+    /**
+     * @dev claim mars tokens after presale is finished
+     */
+    function claim() external {
+        require(block.timestamp > endTimeStamp, "presale did not finished");
+        require(balanceOf[msg.sender] > 0, "No balane to claim");
+        uint256 amount = balanceOf[msg.sender];
+        balanceOf[msg.sender] = 0;
+        token.transfer(msg.sender, amount);
+    }
+    function transferOwnership(address newOwner) public virtual override onlyOwner {
+        super.transferOwnership(newOwner);
+    }
 }
