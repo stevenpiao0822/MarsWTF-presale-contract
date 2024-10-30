@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-
 
 contract DutchAuction {
     address public seller;
@@ -19,8 +18,16 @@ contract DutchAuction {
     address public marketplace;
     address public buyer;
     uint256 public marketFee;
-    constructor(address _seller, address _nftContract, uint256 _tokenId, uint256 _initPrice,
-        uint256 _period, uint256 _reducingRate, address _feeToken, uint256 _marketFee){
+    constructor(
+        address _seller,
+        address _nftContract,
+        uint256 _tokenId,
+        uint256 _initPrice,
+        uint256 _period,
+        uint256 _reducingRate,
+        address _feeToken,
+        uint256 _marketFee
+    ) {
         seller = _seller;
         nftContract = _nftContract;
         tokenId = _tokenId;
@@ -33,21 +40,35 @@ contract DutchAuction {
         marketplace = msg.sender;
         marketFee = _marketFee;
         require(IERC721(nftContract).ownerOf(tokenId) == seller, "Not owner");
-        require((reducingRate * period / 3600) < initPrice, "Invalid auction infor");
+        require(
+            ((reducingRate * period) / 3600) < initPrice,
+            "Invalid auction infor"
+        );
     }
 
-    function getDutchAuctionPrice() public view returns(uint256){
+    function getDutchAuctionPrice() public view returns (uint256) {
         require(!finishedState, "ALready sold out");
-        return initPrice - reducingRate * ((block.timestamp - startTime) / 3600);
+        return
+            initPrice - reducingRate * ((block.timestamp - startTime) / 3600);
     }
 
-    function buyDutchAuction() external{
+    function buyDutchAuction() external {
         require(!finishedState, "ALready sold out");
         uint256 currentPrice = getDutchAuctionPrice();
         uint256 marketFeeAmount = (currentPrice * marketFee) / 100;
         uint256 sellerAmount = currentPrice - marketFeeAmount;
-        SafeERC20.safeTransferFrom(IERC20(feeToken), msg.sender, marketplace, marketFeeAmount);
-        SafeERC20.safeTransferFrom(IERC20(feeToken), msg.sender, seller, sellerAmount);
+        SafeERC20.safeTransferFrom(
+            IERC20(feeToken),
+            msg.sender,
+            marketplace,
+            marketFeeAmount
+        );
+        SafeERC20.safeTransferFrom(
+            IERC20(feeToken),
+            msg.sender,
+            seller,
+            sellerAmount
+        );
         IERC721(nftContract).transferFrom(seller, msg.sender, tokenId);
         endTime = block.timestamp;
         finishedState = true;

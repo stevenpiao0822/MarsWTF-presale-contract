@@ -26,7 +26,7 @@
  *  We got the goods.  Let's go change the culture!
  *  https://marscoin.wtf
  **/
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.27;
 
 library SafeMath {
     function tryAdd(
