@@ -19,4 +19,26 @@ contract EnglishAuction {
     address public marketplace;
     address public winner;
     uint256 public marketFee;
+
+    constructor(
+        address _seller,
+        address _nftContract,
+        uint256 _tokenId,
+        uint256 _initPrice,
+        uint256 _period,
+        address _feeToken,
+        uint256 _marketFee
+    ) {
+        seller = _seller;
+        nftContract = _nftContract;
+        tokenId = _tokenId;
+        initPrice = currentPrice = _initPrice;
+        period = _period;
+        startTime = block.timestamp;
+        endTime = startTime + period;
+        feeToken = _feeToken;
+        marketplace = msg.sender;
+        marketFee = _marketFee;
+        require(IERC721(nftContract).ownerOf(tokenId) == seller, "Not owner");
+    }
 }
