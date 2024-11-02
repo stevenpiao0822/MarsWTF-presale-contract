@@ -42,4 +42,10 @@ describe("Create Initial Contracts of all types", function () {
         CollectionAddress = await Collection.getAddress();
         console.log("\tCollection Contract deployed at:", CollectionAddress);
     });
+    it("should deploy Marketplace Contract", async function () {
+        const instanceMarketplace = await ethers.getContractFactory("Marketplace");
+        Marketplace = await instanceMarketplace.deploy(devTeam, FeeTokenAddress, marketFee, ethers.parseEther(listFee));
+        MarketplaceAddress = await Marketplace.getAddress();
+        console.log("\tMarketplace Contract deployed at:", MarketplaceAddress);
+    });
 });
