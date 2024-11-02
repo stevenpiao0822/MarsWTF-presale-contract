@@ -30,4 +30,10 @@ describe("Create Initial Contracts of all types", function () {
             await ethers.getSigners();
         console.log("\tAccount address\t", await owner.getAddress());
     });
+    it("should deploy FeeToken Contract", async function () {
+        const instanceFeeToken = await ethers.getContractFactory("MarsWTF");
+        FeeToken = await instanceFeeToken.deploy();
+        FeeTokenAddress = await FeeToken.getAddress();
+        console.log("\tFeeToken Contract deployed at:", FeeTokenAddress);
+    });
 });
