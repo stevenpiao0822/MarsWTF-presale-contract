@@ -49,3 +49,13 @@ describe("Create Initial Contracts of all types", function () {
         console.log("\tMarketplace Contract deployed at:", MarketplaceAddress);
     });
 });
+describe("Send FeeToken to buyers", async function(){
+    it("start distributing FeeToken", async function(){
+      await FeeToken.transfer(buyer1.address, ethers.parseEther("1000"));
+      await FeeToken.transfer(buyer2.address, ethers.parseEther("1000"));
+      await FeeToken.transfer(buyer3.address, ethers.parseEther("1000"));
+      expect(await FeeToken.balanceOf(buyer1.address)).to.equal(ethers.parseEther("1000"));
+      expect(await FeeToken.balanceOf(buyer2.address)).to.equal(ethers.parseEther("1000"));
+      expect(await FeeToken.balanceOf(buyer3.address)).to.equal(ethers.parseEther("1000"));
+    })
+  })
