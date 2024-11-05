@@ -49,13 +49,33 @@ describe("Create Initial Contracts of all types", function () {
         console.log("\tMarketplace Contract deployed at:", MarketplaceAddress);
     });
 });
-describe("Send FeeToken to buyers", async function(){
-    it("start distributing FeeToken", async function(){
-      await FeeToken.transfer(buyer1.address, ethers.parseEther("1000"));
-      await FeeToken.transfer(buyer2.address, ethers.parseEther("1000"));
-      await FeeToken.transfer(buyer3.address, ethers.parseEther("1000"));
-      expect(await FeeToken.balanceOf(buyer1.address)).to.equal(ethers.parseEther("1000"));
-      expect(await FeeToken.balanceOf(buyer2.address)).to.equal(ethers.parseEther("1000"));
-      expect(await FeeToken.balanceOf(buyer3.address)).to.equal(ethers.parseEther("1000"));
+describe("Send FeeToken to buyers", async function () {
+    it("start distributing FeeToken", async function () {
+        await FeeToken.transfer(buyer1.address, ethers.parseEther("1000"));
+        await FeeToken.transfer(buyer2.address, ethers.parseEther("1000"));
+        await FeeToken.transfer(buyer3.address, ethers.parseEther("1000"));
+        expect(await FeeToken.balanceOf(buyer1.address)).to.equal(ethers.parseEther("1000"));
+        expect(await FeeToken.balanceOf(buyer2.address)).to.equal(ethers.parseEther("1000"));
+        expect(await FeeToken.balanceOf(buyer3.address)).to.equal(ethers.parseEther("1000"));
     })
+})
+const tokenURI_1: string = "firstToken";
+const tokenURI_2: string = "secondToken";
+const tokenURI_3: string = "thirdToken";
+describe("Mint NFT", async function () {
+  it("creator1 mint new NFT", async function () {
+    await Collection.connect(creator1).mint(tokenURI_1);
+    expect(await Collection.ownerOf(0)).equal(creator1);
   })
+  it("creator2 mint new NFT", async function () {
+    await Collection.connect(creator2).mint(tokenURI_2);
+    expect(await Collection.ownerOf(1)).equal(creator2);
+  })
+  it("creator3 mint new NFT", async function () {
+    await Collection.connect(creator3).mint(tokenURI_3);
+    expect(await Collection.ownerOf(2)).equal(creator3);
+  })
+  it("error if creator1 mint second NFT before total NFT Number is 1000", async function(){
+    await expect(Collection.connect(creator1).mint("DisableMint")).to.be.revertedWith("Invalid minter")
+  })
+});
