@@ -79,3 +79,54 @@ describe("Mint NFT", async function () {
     await expect(Collection.connect(creator1).mint("DisableMint")).to.be.revertedWith("Invalid minter")
   })
 });
+
+let englishAuctionContract: any;
+let englishAuctionContractAddress: any;
+let dutchAuctionContract: any;
+let dutchAuctionContractAddress: any;
+let fixSaleContract: any;
+let fixSaleContractAddress: any;
+describe("open English Auctions", async function(){
+  it("creator1 open English Auction", async function(){
+    await Marketplace.connect(creator1).openEnglishAuction(CollectionAddress, 0, ethers.parseEther("1"), 3600);
+    const englishAuctionNumber = await Marketplace.englishAuctionLength();
+    console.log("englishAuctionNumber", englishAuctionNumber);
+    englishAuctionContractAddress = await Marketplace.englishAuctions(Number(englishAuctionNumber) - 1);
+    console.log("englishAuctionContractAddress", englishAuctionContractAddress);
+    englishAuctionContract = new ethers.Contract(
+      englishAuctionContractAddress,
+      EnglishABI,
+      ethers.provider
+    );
+    await Collection.connect(creator1).approve(englishAuctionContractAddress, 0);
+
+  })
+  it("creator2 open Dutch Auction", async function(){
+    await Marketplace.connect(creator2).openDutchAuction(CollectionAddress, 1, ethers.parseEther("1"), 7200, ethers.parseEther("0.3"));
+    const dutchAuctionNumber = await Marketplace.dutchAuctionLength();
+    console.log("dutchAuctionNumber", dutchAuctionNumber);
+    dutchAuctionContractAddress = await Marketplace.dutchAuctions(Number(dutchAuctionNumber) - 1);
+    console.log("dutchAuctionContractAddress", dutchAuctionContractAddress);
+    dutchAuctionContract = new ethers.Contract(
+      dutchAuctionContractAddress,
+      DutchABI,
+      ethers.provider
+    );
+    await Collection.connect(creator2).approve(dutchAuctionContractAddress, 1);
+
+  })
+  it("creator3 open FixSale", async function(){
+    await Marketplace.connect(creator3).openFixSale(CollectionAddress, 2, ethers.parseEther("1"));
+    const fixSaleNumber = await Marketplace.fixSaleLength();
+    console.log("fixSaleNumber", fixSaleNumber);
+    fixSaleContractAddress = await Marketplace.fixSales(Number(fixSaleNumber) - 1);
+    console.log("fixSaleContractAddress", fixSaleContractAddress);
+    fixSaleContract = new ethers.Contract(
+      fixSaleContractAddress,
+      FixedABI,
+      ethers.provider
+    );
+    await Collection.connect(creator3).approve(fixSaleContractAddress, 2);
+
+  })
+})
