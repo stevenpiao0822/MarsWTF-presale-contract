@@ -1,9 +1,9 @@
 import { ethers } from "hardhat";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
-// import EnglishABI from './abi/englishAuction.json';
-// import DutchABI from './abi/dutchAuction.json';
-// import FixedABI from './abi/fixSale.json';
+import EnglishABI from './abi/englishAuction.json';
+import DutchABI from './abi/dutchAuction.json';
+import FixedABI from './abi/fixSale.json';
 
 let FeeToken: any;
 let FeeTokenAddress: any;
