@@ -4,6 +4,11 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+/**
+ * @title Collection
+ * @author Steven Leal
+ * @notice Collection contract
+ */
 contract Collection is ERC721 {
     string public description;
     uint256 public tokenNumber;
